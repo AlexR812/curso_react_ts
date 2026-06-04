@@ -13,6 +13,7 @@ function App() {
         const itemExist = cart.findIndex(guitar => guitar.id === item.id)
         if (itemExist >= 0) {
             const newCart = [...cart]
+            
             newCart[itemExist].quantity += 1
             setCart(newCart)
         } else {
@@ -20,10 +21,43 @@ function App() {
             setCart([...cart, item])
         }
     }
-     
+    
+    function clearCart() {
+        setCart([])
+    }
+
+     const cantItems = (e, id) => {
+        if (e.target.innerText === "-") {
+            const newCart = [...cart]
+            const itemIndex = newCart.findIndex(item => item.id === id)
+            newCart[itemIndex].quantity -= 1
+            if (newCart[itemIndex].quantity === 0) {
+                deleteItem(id)
+            } else {
+
+                setCart(newCart)
+            }
+        } else {
+            const newCart = [...cart]
+            const itemIndex = newCart.findIndex(item => item.id === id)
+            newCart[itemIndex].quantity += 1
+            setCart(newCart)
+        }        
+    }
+
+    function deleteItem(id) {
+        const updatedCart = cart.filter(item => item.id !== id)
+        setCart(updatedCart)
+    }
+
     return (
     <>
-        <Header />  
+        <Header
+            cart={cart}
+            clearCart={clearCart}
+            cantItems={cantItems}
+            deleteItem={deleteItem}
+         />  
         <main className="container-xl mt-5">
             <h2 className="text-center">Nuestra Colección</h2>
 
@@ -34,6 +68,7 @@ function App() {
                             key={guitar.id}
                             guitar={guitar}
                             addToCart={addToCart}
+
                         />)
                     })
                 }
