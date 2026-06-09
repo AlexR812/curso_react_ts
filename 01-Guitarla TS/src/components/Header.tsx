@@ -1,6 +1,15 @@
-import {useMemo} from "react";
+import type { CartItem, GuitarID } from "../types";
 
-function Header({cart, clearCart, cantItems, deleteItem, isEmpty, totalCart}) {
+type HeaderProps = {
+    cart: CartItem[],
+    clearCart: () => void,
+    cantItems: (id: GuitarID, action: string) => void,
+    deleteItem: (id: GuitarID) => void,
+    isEmpty: boolean,
+    totalCart: number
+}
+
+function Header({cart, clearCart, cantItems, deleteItem, isEmpty, totalCart} : HeaderProps) {
 
     return (
         <header className="py-5 header">
@@ -34,7 +43,7 @@ function Header({cart, clearCart, cantItems, deleteItem, isEmpty, totalCart}) {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {cart.map((item) => {
+                                                {cart.map((item: CartItem) => {
                                                     return (
                                                     <tr key={item.id}>
                                                         <td>
@@ -48,7 +57,7 @@ function Header({cart, clearCart, cantItems, deleteItem, isEmpty, totalCart}) {
                                                             <button
                                                                 type="button"
                                                                 className="btn btn-dark"
-                                                                onClick={(e) => cantItems(e,item.id)}
+                                                                onClick={() => cantItems(item.id, "decrease")}
                                                             >
                                                                 -
                                                             </button>
@@ -56,7 +65,7 @@ function Header({cart, clearCart, cantItems, deleteItem, isEmpty, totalCart}) {
                                                             <button
                                                                 type="button"
                                                                 className="btn btn-dark"
-                                                                onClick={(e) => cantItems(e,item.id)}
+                                                                onClick={() => cantItems(item.id, "increase")}
                                                             >
                                                                 +
                                                             </button>
