@@ -15,7 +15,7 @@ export default function OrderContents({ order, totalOrder }: OrderContentsProps)
         <div className="mt-10">
             {
                 order.length === 0 ? (
-                    <p className="text-center">La orden está vacía</p>
+                    <p className="text-center font-medium text-lg">La orden está vacía</p>
                 ) : (   
                     order.map((item) => {
                         return (                        
@@ -32,16 +32,16 @@ export default function OrderContents({ order, totalOrder }: OrderContentsProps)
                     })
                 )
             }
-            {
+        </div>
+        {
                 order.length === 0 ? (
                     ''
                 ) : (
-                    <div>
-                        <p className='font-black'>Total: {formatCurrency(totalOrder)}</p>
+                    <div className='mt-10'>
+                        <p className='font-black text-lg'>Total: {formatCurrency(totalOrder)}</p>
                     </div>
                 )
             }
-        </div>
     </div>
   )
 }
